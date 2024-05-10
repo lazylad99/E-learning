@@ -13,6 +13,7 @@ const { cloudinaryConnect } = require('./config/cloudinary');
 
 // routes
 const userRoutes = require('./routes/user');
+const instructorRoutes = require('./routes/instructor');
 // const profileRoutes = require('./routes/profile');
 // const courseRoutes = require('./routes/course');
 
@@ -47,6 +48,7 @@ cloudinaryConnect();
 
 // mount route
 app.use('/api/v1/auth', userRoutes);
+app.use('/api/v1/instructor', instructorRoutes);
 // app.use('/api/v1/profile', profileRoutes);
 // app.use('/api/v1/course', courseRoutes);
 

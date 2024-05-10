@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const bcrypt = require('bcrypt');
 const Student = require('../models/students');
-const Instructor = require('../models/instructor');
+const Instructor = require('../models/Instructor');
 
 // Store JWT secret key in a variable
 const jwtSecret = process.env.jwtSecret;
