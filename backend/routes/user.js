@@ -7,6 +7,7 @@ router.post('/student/register', registerStudent);
 router.post('/student/login', loginStudent);
 
 // Routes for instructor registration and login
+
 router.post('/instructor/register', registerInstructor);
 router.post('/instructor/login', loginInstructor);
 
