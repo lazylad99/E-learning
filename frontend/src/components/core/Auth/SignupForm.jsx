@@ -72,7 +72,7 @@ function SignupForm() {
       }
 
       // Navigate to OTP verification page
-      navigate("/verify-otp");
+      navigate("/dashboard/${accountType}");
     } catch (error) {
       toast.error("Error: " + error.message);
     }

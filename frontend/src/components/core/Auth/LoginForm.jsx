@@ -1,33 +1,56 @@
-import { useState } from "react"
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
-import { useDispatch } from "react-redux"
-import { Link, useNavigate } from "react-router-dom"
-
-import { login } from "../../../services/operations/authAPI"
+import { useState } from "react";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { Link, useNavigate } from "react-router-dom";
 
 function LoginForm() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    accountType: "student", // Default to student
   });
+  const [showPassword, setShowPassword] = useState(false);
 
-  const [showPassword, setShowPassword] = useState(false)
-
-  const { email, password } = formData;
+  const { email, password, accountType } = formData;
 
   const handleOnChange = (e) => {
     setFormData((prevData) => ({
       ...prevData,
       [e.target.name]: e.target.value,
-    }))
-  }
+    }));
+  };
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
-    dispatch(login(email, password, navigate))
-  }
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/v1/auth/${accountType}/login`,
+        {
+          // Endpoint based on accountType
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(errorMessage);
+      }
+
+      // Redirect based on the user's account type
+      if (accountType === "student") {
+        navigate("/dashboard/student");
+      } else if (accountType === "instructor") {
+        navigate("/dashboard/instructor");
+      }
+    } catch (error) {
+      console.error("Error:", error.message);
+      // Handle error (e.g., display error message)
+    }
+  };
 
   return (
     <form
@@ -45,9 +68,6 @@ function LoginForm() {
           value={email}
           onChange={handleOnChange}
           placeholder="Enter email address"
-          style={{
-            boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
-          }}
           className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5 outline-none"
         />
       </label>
@@ -63,9 +83,6 @@ function LoginForm() {
           value={password}
           onChange={handleOnChange}
           placeholder="Enter Password"
-          style={{
-            boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
-          }}
           className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] pr-12 text-richblack-5 outline-none"
         />
         <span
@@ -85,6 +102,37 @@ function LoginForm() {
         </Link>
       </label>
 
+      <label className="w-full">
+        <p className=" text-[0.875rem] leading-[1.375rem] text-richblack-5">
+          Login As <sup className="text-pink-200">*</sup>
+        </p>
+      </label>
+      <div className="flex items-center">
+        <input
+          type="radio"
+          id="student"
+          name="accountType"
+          value="student"
+          checked={accountType == "student"}
+          onChange={handleOnChange}
+        />
+        <label htmlFor="student" className="ml-2 text-richblack-5">
+          Student
+        </label>
+        <input
+          type="radio"
+          id="instructor"
+          name="accountType"
+          value="instructor"
+          checked={accountType == "instructor"}
+          onChange={handleOnChange}
+          className="ml-4"
+        />
+
+        <label htmlFor="instructor" className="ml-2 text-richblack-5">
+          Instructor
+        </label>
+      </div>
 
       <button
         type="submit"
@@ -93,7 +141,7 @@ function LoginForm() {
         Sign In
       </button>
     </form>
-  )
+  );
 }
 
-export default LoginForm
+export default LoginForm;
