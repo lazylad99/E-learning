@@ -13,9 +13,9 @@ const { cloudinaryConnect } = require('./config/cloudinary');
 
 // routes
 const userRoutes = require('./routes/user');
-// const profileRoutes = require('./routes/profile');
-// const courseRoutes = require('./routes/course');
-
+const instructorRoutes = require('./routes/instructor');
+const studentRoutes = require('./routes/student');
+const courseRoutes = require('./routes/course');
 
 // middleware 
 app.use(express.json()); // to parse json body
@@ -47,8 +47,10 @@ cloudinaryConnect();
 
 // mount route
 app.use('/api/v1/auth', userRoutes);
-// app.use('/api/v1/profile', profileRoutes);
-// app.use('/api/v1/course', courseRoutes);
+app.use('/api/v1/instructor', instructorRoutes);
+app.use('/api/v1/student', studentRoutes);
+app.use('/api/v1/course', courseRoutes);
+
 
 // Default Route
 app.get('/', (req, res) => {
