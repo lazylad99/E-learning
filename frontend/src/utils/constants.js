@@ -1,6 +1,6 @@
 export const ACCOUNT_TYPE = {
-  STUDENT: "student",
-  INSTRUCTOR: "instructor",
+  STUDENT: "Student",
+  INSTRUCTOR: "Instructor",
   ADMIN: "Admin",
 }
 

@@ -1,50 +1,105 @@
-const jwt = require('jsonwebtoken');
+// AUTH , IS STUDENT , IS INSTRUCTOR , IS ADMIN
+
+const jwt = require("jsonwebtoken");
 require('dotenv').config();
-const Student = require('../models/Student');
-const Instructor = require('../models/instructor');
 
-// Middleware function for student authentication
-const studentAuth = async (req, res, next) => {
+// ================ AUTH ================
+exports.auth = (req, res, next) => {
     try {
-        const token = req.cookies.token; // Assuming token is stored in a cookie
+        const token = req.body?.token || req.cookies?.token || req.header('Authorization')?.replace('Bearer ', '');
         if (!token) {
-            throw new Error('Authorization failed!');
+            return res.status(401).json({
+                success: false,
+                message: 'Token is Missing'
+            });
         }
-        
-        const decoded = jwt.verify(token, config.get('jwtSecret'));
-        const student = await Student.findOne({ _id: decoded._id, 'tokens.token': token });
-        
-        if (!student) {
-            throw new Error('Authorization failed!');
+        try {
+            const decode = jwt.verify(token, process.env.JWT_SECRET);
+            req.user = decode;
         }
-
-        req.student = student;
+        catch (error) {
+            console.log('Error while decoding token');
+            console.log(error);
+            return res.status(401).json({
+                success: false,
+                error: error.message,
+                message: 'Error while decoding token'
+            })
+        }
         next();
-    } catch (error) {
-        res.status(401).send({ error: 'Authorization failed!' });
     }
-};
+    catch (error) {
+        console.log('Error while token validating');
+        console.log(error);
+        return res.status(500).json({
+            success: false,
+            message: 'Error while token validating'
+        })
+    }
+}
 
-// Middleware function for instructor authentication
-const instructorAuth = async (req, res, next) => {
+// ================ IS STUDENT ================
+exports.isStudent = (req, res, next) => {
     try {
-        const token = req.cookies.token; // Assuming token is stored in a cookie
-        if (!token) {
-            throw new Error('Authorization failed!');
+        if (req.user?.accountType !== 'Student') {
+            return res.status(401).json({
+                success: false,
+                message: 'This Page is protected only for students'
+            })
         }
-        
-        const decoded = jwt.verify(token, config.get('jwtSecret'));
-        const instructor = await Instructor.findOne({ _id: decoded._id, 'tokens.token': token });
-        
-        if (!instructor) {
-            throw new Error('Authorization failed!');
-        }
-
-        req.instructor = instructor;
         next();
-    } catch (error) {
-        res.status(401).send({ error: 'Authorization failed!' });
     }
-};
+    catch (error) {
+        console.log('Error while checking user validity with student accountType');
+        console.log(error);
+        return res.status(500).json({
+            success: false,
+            error: error.message,
+            message: 'Error while checking user validity with student accountType'
+        })
+    }
+}
 
-module.exports = { studentAuth, instructorAuth };
+// ================ IS INSTRUCTOR ================
+exports.isInstructor = (req, res, next) => {
+    try {
+        if (req.user?.accountType !== 'Instructor') {
+            return res.status(401).json({
+                success: false,
+                message: 'This Page is protected only for Instructors'
+            })
+        }
+        next();
+    }
+    catch (error) {
+        console.log('Error while checking user validity with Instructor accountType');
+        console.log(error);
+        return res.status(500).json({
+            success: false,
+            error: error.message,
+            message: 'Error while checking user validity with Instructor accountType'
+        })
+    }
+}
+
+// ================ IS ADMIN ================
+exports.isAdmin = (req, res, next) => {
+    try {
+        if (req.user.accountType !== 'Admin') {
+            return res.status(401).json({
+                success: false,
+                message: 'This Page is protected only for Admins'
+            })
+        }
+        next();
+    }
+    catch (error) {
+        console.log('Error while checking user validity with Admin accountType');
+        console.log(error);
+        return res.status(500).json({
+            success: false,
+            error: error.message,
+            message: 'Error while checking user validity with Admin accountType'
+        })
+    }
+}

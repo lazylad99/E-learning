@@ -30,7 +30,8 @@ export default function DeleteAccount() {
           <div className="sm:w-3/5 text-pink-25 flex flex-col gap-3 mt-1">
             <p>Would you like to delete account ?</p>
             <p>
-              Deleting your account is permanent and will remove all the contain associated with it.
+              This account may contain Paid Courses. Deleting your account is
+              permanent and will remove all the contain associated with it.
             </p>
           </div>
 

@@ -16,12 +16,12 @@ import { fetchCourseDetails } from "../services/operations/courseDetailsAPI"
 import { buyCourse } from "../services/operations/studentFeaturesAPI"
 
 import GetAvgRating from "../utils/avgRating"
-import { ACCOUNT_TYPE } from '../utils/constants';
+import { ACCOUNT_TYPE } from './../utils/constants';
 import { addToCart } from "../slices/cartSlice"
 
 import { GiReturnArrow } from 'react-icons/gi'
 import { MdOutlineVerified } from 'react-icons/md'
-import Img from '../components/common/Img';
+import Img from './../components/common/Img';
 import toast from "react-hot-toast"
 
 

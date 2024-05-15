@@ -86,7 +86,7 @@ export default function Sidebar() {
 
           <div className="flex flex-col">
             <SidebarLink
-              link={{ name: "Settings", path: "/dashboard/edit-profile" }}
+              link={{ name: "Settings", path: "/dashboard/settings" }}
               iconName={"VscSettingsGear"}
               setOpenSideMen={setOpenSideMenu}
             />

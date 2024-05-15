@@ -8,6 +8,8 @@ import RenderSteps from "../AddCourse/RenderSteps"
 import Loading from './../../../common/Loading';
 
 
+
+
 export default function EditCourse() {
   const dispatch = useDispatch()
   const { courseId } = useParams()

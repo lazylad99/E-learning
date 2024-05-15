@@ -216,25 +216,25 @@ const Home = () => {
                     </div>
 
                     {/* course slider */}
-                    <div className='mx-auto box-content w-full max-w-maxContentTab px- py-12 lg:max-w-maxContent'>
+                    {/* <div className='mx-auto box-content w-full max-w-maxContentTab px- py-12 lg:max-w-maxContent'>
                         <h2 className='text-white mb-6 text-2xl '>
                             Popular Picks for You 🏆
                         </h2>
                         <Course_Slider Courses={CatalogPageData?.selectedCategory?.courses} />
-                    </div>
-                    <div className=' mx-auto box-content w-full max-w-maxContentTab px- py-12 lg:max-w-maxContent'>
+                    </div> */}
+                    {/* <div className=' mx-auto box-content w-full max-w-maxContentTab px- py-12 lg:max-w-maxContent'>
                         <h2 className='text-white mb-6 text-2xl '>
                             Top Enrollments Today 🔥
                         </h2>
                         <Course_Slider Courses={CatalogPageData?.mostSellingCourses} />
-                    </div>
+                    </div> */}
 
 
-                    <ExploreMore />
+                    {/* <ExploreMore /> */}
                 </div>
 
                 {/*Section 2  */}
-                <div className='bg-pure-greys-5 text-richblack-700 '>
+                {/* <div className='bg-pure-greys-5 text-richblack-700 '>
                     <div className='homepage_bg h-[310px]'>
                         <div className='w-11/12 max-w-maxContent flex flex-col items-center justify-between gap-5 mx-auto'>
                             <div className='h-[150px]'></div>
@@ -252,9 +252,9 @@ const Home = () => {
                                 </CTAButton>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
 
-                    <div className='mx-auto w-11/12 max-w-maxContent flex flex-col items-center justify-between gap-7'>
+                    {/* <div className='mx-auto w-11/12 max-w-maxContent flex flex-col items-center justify-between gap-7'>
                         <div className='flex flex-col lg:flex-row gap-5 mb-10 mt-[95px]'>
                             <div className='text-3xl lg:text-4xl font-semibold w-full lg:w-[45%]'>
                                 Get the Skills you need for a
@@ -274,28 +274,24 @@ const Home = () => {
                         </div>
 
 
-                        {/* leadership */}
                         <TimelineSection />
 
                         <LearningLanguageSection />
 
-                    </div>
+                    </div> */}
 
-                </div>
+                {/* </div> */}
 
-
-                {/*Section 3 */}
+{/* 
                 <div className='mt-14 w-11/12 mx-auto max-w-maxContent flex-col items-center justify-between gap-8 first-letter bg-richblack-900 text-white'>
                     <InstructorSection />
 
-                    {/* Reviws from Other Learner */}
                     <h1 className="text-center text-3xl lg:text-4xl font-semibold mt-8 flex justify-center items-center gap-x-3">
                         Reviews from other learners <MdOutlineRateReview className='text-yellow-25' />
                     </h1>
                     <ReviewSlider />
-                </div>
+                </div> */}
 
-                {/*Footer */}
                 <Footer />
             </div >
         </React.Fragment>
