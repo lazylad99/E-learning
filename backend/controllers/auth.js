@@ -23,7 +23,7 @@ exports.sendOTP = async (req, res) => {
 
         // if exist then response
         if (checkUserPresent) {
-            console.log('(when otp generate) User alreay registered')
+            console.log('(when otp generate) User already registered')
             return res.status(401).json({
                 success: false,
                 message: 'User is Already Registered'
@@ -88,7 +88,7 @@ exports.signup = async (req, res) => {
         if (password !== confirmPassword) {
             return res.status(400).json({
                 success: false,
-                messgae: 'passowrd & confirm password does not match, Please try again..!'
+                message: 'passowrd & confirm password does not match, Please try again..!'
             });
         }
 

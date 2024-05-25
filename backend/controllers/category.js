@@ -65,6 +65,39 @@ exports.showAllCategories = async (req, res) => {
 
 
 
+// ================ Delete Category ================
+exports.deleteCategory = async (req, res) => {
+    try {
+        // Extract category ID from request parameters
+        const { categoryId } = req.params;
+
+        // Find the category by ID and delete it
+        const deletedCategory = await Category.findByIdAndDelete(categoryId);
+
+        // Handle the case when the category is not found
+        if (!deletedCategory) {
+            return res.status(404).json({ success: false, message: "Category not found" });
+        }
+
+        // Return success response
+        res.status(200).json({
+            success: true,
+            message: 'Category deleted successfully',
+            data: deletedCategory
+        });
+    } catch (error) {
+        console.error('Error while deleting category:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error while deleting category',
+            error: error.message
+        });
+    }
+}
+
+
+
+
 // ================ Get Category Page Details ================
 exports.getCategoryPageDetails = async (req, res) => {
     try {
