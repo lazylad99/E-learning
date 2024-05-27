@@ -146,17 +146,15 @@ const Home = () => {
             className=" mt-4 w-[90%] text-center text-base lg:text-lg font-bold text-richblack-300"
           >
             At Gyan Srijan, we believe in the power of continuous learning to
-            drive personal and professional transformation. Whether you aim to
-            advance your career or explore new interests, Gyan Srijan is here to
-            support your journey. Innovate your skills, transform your life, and
+            drive personal and professional transformation. Innovate your skills, transform your life, and
             unlock your potential with us.{" "}
           </motion.div>
 
           <div className="flex flex-row gap-7 mt-8">
-            <Link to={"/catalog/Indian-Culture"}>
+            <Link to={"/catalog/indian-culture"}>
               <div
                 className="z-0 group p-1 mx-auto rounded-full bg-yellow-50 font-bold text-richblack-900
-                                        transition-all duration-200 hover:scale-95 w-fit"
+                                        transition-all duration-200 hover:scale-95 w-fit hover:text-white"
               >
                 <div
                   className="flex flex-row items-center gap-2 rounded-full px-10 py-[5px]
@@ -222,11 +220,11 @@ const Home = () => {
               heading={
                 <div className="w-[100%] text-3xl lg:text-4xl font-semibold lg:w-[50%]">
                   Start
-                  <HighlightText text={"coding in seconds"} />
+                  <HighlightText text={"learning in seconds"} />
                 </div>
               }
               subheading={
-                "Go ahead, give it a try. Our hands-on learning environment means you'll be writing real code from your very first lesson."
+                "Go ahead, give it a try. Our hands-on learning environment means you'll be learning stuff from your very first lesson."
               }
               ctabtn1={{
                 btnText: "Continue Lesson",
@@ -244,81 +242,10 @@ const Home = () => {
             />
           </div>
 
-          {/* course slider */}
-          {/* <div className='mx-auto box-content w-full max-w-maxContentTab px- py-12 lg:max-w-maxContent'>
-                        <h2 className='text-white mb-6 text-2xl '>
-                            Popular Picks for You 🏆
-                        </h2>
-                        <Course_Slider Courses={CatalogPageData?.selectedCategory?.courses} />
-                    </div> */}
-          {/* <div className=' mx-auto box-content w-full max-w-maxContentTab px- py-12 lg:max-w-maxContent'>
-                        <h2 className='text-white mb-6 text-2xl '>
-                            Top Enrollments Today 🔥
-                        </h2>
-                        <Course_Slider Courses={CatalogPageData?.mostSellingCourses} />
-                    </div> */}
-
-          {/* <ExploreMore /> */}
+        
         </div>
 
-        {/*Section 2  */}
-        {/* <div className='bg-pure-greys-5 text-richblack-700 '>
-                    <div className='homepage_bg h-[310px]'>
-                        <div className='w-11/12 max-w-maxContent flex flex-col items-center justify-between gap-5 mx-auto'>
-                            <div className='h-[150px]'></div>
-                            <div className='flex flex-row gap-7 text-white '>
-                                <CTAButton active={true} linkto={"/signup"}>
-                                    <div className='flex items-center gap-3' >
-                                        Explore Full Catalog
-                                        <FaArrowRight />
-                                    </div>
-                                </CTAButton>
-                                <CTAButton active={false} linkto={"/signup"}>
-                                    <div>
-                                        Learn more
-                                    </div>
-                                </CTAButton>
-                            </div>
-                        </div>
-                    </div> */}
-
-        {/* <div className='mx-auto w-11/12 max-w-maxContent flex flex-col items-center justify-between gap-7'>
-                        <div className='flex flex-col lg:flex-row gap-5 mb-10 mt-[95px]'>
-                            <div className='text-3xl lg:text-4xl font-semibold w-full lg:w-[45%]'>
-                                Get the Skills you need for a
-                                <HighlightText text={"Job that is in demand"} />
-                            </div>
-
-                            <div className='flex flex-col gap-10 w-full lg:w-[40%] items-start'>
-                                <div className='text-[16px]'>
-                                    The modern StudyNotion is the dictates its own terms. Today, to be a competitive specialist requires more than professional skills.
-                                </div>
-                                <CTAButton active={true} linkto={"/signup"}>
-                                    <div>
-                                        Learn more
-                                    </div>
-                                </CTAButton>
-                            </div>
-                        </div>
-
-
-                        <TimelineSection />
-
-                        <LearningLanguageSection />
-
-                    </div> */}
-
-        {/* </div> */}
-
-        {/* 
-                <div className='mt-14 w-11/12 mx-auto max-w-maxContent flex-col items-center justify-between gap-8 first-letter bg-richblack-900 text-white'>
-                    <InstructorSection />
-
-                    <h1 className="text-center text-3xl lg:text-4xl font-semibold mt-8 flex justify-center items-center gap-x-3">
-                        Reviews from other learners <MdOutlineRateReview className='text-yellow-25' />
-                    </h1>
-                    <ReviewSlider />
-                </div> */}
+       
 
         <Footer />
       </div>

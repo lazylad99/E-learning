@@ -160,7 +160,7 @@ exports.signup = async (req, res) => {
         res.status(401).json({
             success: false,
             error: error.message,
-            messgae: 'User cannot be registered , Please try again..!'
+            message: 'User cannot be registered , Please try again..!'
         })
     }
 }
