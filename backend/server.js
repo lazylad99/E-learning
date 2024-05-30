@@ -53,8 +53,6 @@ app.use('/api/v1/payment', paymentRoutes);
 app.use('/api/v1/course', courseRoutes);
 
 
-
-
 // Default Route
 app.get('/', (req, res) => {
     // console.log('Your server is up and running..!');

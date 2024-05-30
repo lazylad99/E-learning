@@ -14,11 +14,11 @@ const { convertSecondsToDuration } = require("../utils/secToDuration")
 exports.createCourse = async (req, res) => {
     try {
         // extract data
-        let { courseName, courseDescription, whatYouWillLearn, price, category, instructions: _instructions, status, tag: _tag } = req.body;
+        let { courseName, courseDescription, price, category, instructions: _instructions, status, tag: _tag } = req.body;
 
         // Convert the tag and instructions from stringified Array to Array
-        const tag = JSON.parse(_tag)
-        const instructions = JSON.parse(_instructions)
+        // const tag = JSON.parse(_tag)
+        // const instructions = JSON.parse(_instructions)
 
         // console.log("tag = ", tag)
         // console.log("instructions = ", instructions)
@@ -27,8 +27,8 @@ exports.createCourse = async (req, res) => {
         const thumbnail = req.files?.thumbnailImage;
 
         // validation
-        if (!courseName || !courseDescription || !whatYouWillLearn || !price
-            || !category || !thumbnail || !instructions.length || !tag.length) {
+        if (!courseName || !courseDescription || !price
+            || !category || !thumbnail ) {
             return res.status(400).json({
                 success: false,
                 message: 'All Fileds are required'
@@ -59,8 +59,8 @@ exports.createCourse = async (req, res) => {
 
         // create new course - entry in DB
         const newCourse = await Course.create({
-            courseName, courseDescription, instructor: instructorId, whatYouWillLearn, price, category: categoryDetails._id,
-            tag, status, instructions, thumbnail: thumbnailDetails.secure_url, createdAt: Date.now(),
+            courseName, courseDescription, instructor: instructorId, price, category: categoryDetails._id,
+            status, thumbnail: thumbnailDetails.secure_url, createdAt: Date.now(),
         });
 
         // add course id to instructor courses list, this is bcoz - it will show all created courses by instructor 
@@ -372,29 +372,42 @@ exports.editCourse = async (req, res) => {
 // ================ Get a list of Course for a given Instructor ================
 exports.getInstructorCourses = async (req, res) => {
     try {
-        // Get the instructor ID from the authenticated user or request body
-        const instructorId = req.user.id
+        // Get the instructor ID from the authenticated user
+        const instructorId = req.user?.id;
+
+        // Check if instructorId is provided
+        if (!instructorId) {
+            return res.status(400).json({
+                success: false,
+                message: "Instructor ID is required"
+            });
+        }
 
         // Find all courses belonging to the instructor
-        const instructorCourses = await Course.find({ instructor: instructorId, }).sort({ createdAt: -1 })
+        const instructorCourses = await Course.find({ instructor: instructorId }).sort({ createdAt: -1 });
 
+        // Optionally calculate the total duration of all courses in seconds
+        const totalDurationInSeconds = instructorCourses.reduce((total, course) => {
+            return total + (course.duration || 0); // Assuming each course document has a 'duration' field
+        }, 0);
 
         // Return the instructor's courses
         res.status(200).json({
             success: true,
             data: instructorCourses,
-            // totalDurationInSeconds:totalDurationInSeconds,
+            totalCourses: instructorCourses.length,
+            totalDurationInSeconds: totalDurationInSeconds,
             message: 'Courses made by Instructor fetched successfully'
-        })
+        });
     } catch (error) {
-        console.error(error)
+        console.error('Error while fetching instructor courses:', error);
         res.status(500).json({
             success: false,
             message: "Failed to retrieve instructor courses",
             error: error.message,
-        })
+        });
     }
-}
+};
 
 
 

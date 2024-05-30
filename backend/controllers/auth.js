@@ -14,60 +14,54 @@ const { passwordUpdated } = require("../mail/templates/passwordUpdate");
 // ================ SEND-OTP For Email Verification ================
 exports.sendOTP = async (req, res) => {
     try {
-
-        // fetch email from re.body 
+        // Fetch email from request body
         const { email } = req.body;
 
-        // check user already exist ?
+        // Check if the user already exists
         const checkUserPresent = await User.findOne({ email });
 
-        // if exist then response
+        // If the user exists, respond with an error
         if (checkUserPresent) {
-            console.log('(when otp generate) User already registered')
+            console.log('(when otp generate) User already registered');
             return res.status(401).json({
                 success: false,
-                message: 'User is Already Registered'
-            })
+                message: 'User is already registered'
+            });
         }
 
-        // generate Otp
+        // Generate OTP
         const otp = optGenerator.generate(6, {
             upperCaseAlphabets: false,
             lowerCaseAlphabets: false,
             specialChars: false
-        })
+        });
         // console.log('Your otp - ', otp);
 
+        // Extract and format the user's name from the email
         const name = email.split('@')[0].split('.').map(part => part.replace(/\d+/g, '')).join(' ');
         console.log(name);
 
-        // send otp in mail
+        // Send OTP via email
         await mailSender(email, 'OTP Verification Email', otpTemplate(otp, name));
 
-        // create an entry for otp in DB
+        // Create an entry for the OTP in the database
         const otpBody = await OTP.create({ email, otp });
         // console.log('otpBody - ', otpBody);
 
-
-
-        // return response successfully
+        // Return success response
         res.status(200).json({
             success: true,
-            otp,
-            message: 'Otp sent successfully'
+            message: 'OTP sent successfully'
         });
-    }
-
-    catch (error) {
-        console.log('Error while generating Otp - ', error);
-        res.status(200).json({
+    } catch (error) {
+        console.error('Error while generating OTP:', error);
+        res.status(500).json({
             success: false,
-            message: 'Error while generating Otp',
-            error: error.mesage
+            message: 'Error while generating OTP',
+            error: error.message
         });
     }
-}
-
+};
 
 // ================ SIGNUP ================
 exports.signup = async (req, res) => {
