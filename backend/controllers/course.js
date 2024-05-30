@@ -372,42 +372,29 @@ exports.editCourse = async (req, res) => {
 // ================ Get a list of Course for a given Instructor ================
 exports.getInstructorCourses = async (req, res) => {
     try {
-        // Get the instructor ID from the authenticated user
-        const instructorId = req.user?.id;
-
-        // Check if instructorId is provided
-        if (!instructorId) {
-            return res.status(400).json({
-                success: false,
-                message: "Instructor ID is required"
-            });
-        }
+        // Get the instructor ID from the authenticated user or request body
+        const instructorId = req.user.id
 
         // Find all courses belonging to the instructor
-        const instructorCourses = await Course.find({ instructor: instructorId }).sort({ createdAt: -1 });
+        const instructorCourses = await Course.find({ instructor: instructorId, }).sort({ createdAt: -1 })
 
-        // Optionally calculate the total duration of all courses in seconds
-        const totalDurationInSeconds = instructorCourses.reduce((total, course) => {
-            return total + (course.duration || 0); // Assuming each course document has a 'duration' field
-        }, 0);
 
         // Return the instructor's courses
         res.status(200).json({
             success: true,
             data: instructorCourses,
-            totalCourses: instructorCourses.length,
-            totalDurationInSeconds: totalDurationInSeconds,
+            // totalDurationInSeconds:totalDurationInSeconds,
             message: 'Courses made by Instructor fetched successfully'
-        });
+        })
     } catch (error) {
-        console.error('Error while fetching instructor courses:', error);
+        console.error(error)
         res.status(500).json({
             success: false,
             message: "Failed to retrieve instructor courses",
             error: error.message,
-        });
+        })
     }
-};
+}
 
 
 
